@@ -1,6 +1,6 @@
 <template>
     <div class="relative m-8 h-[calc(100vh-90px)]">
-        <div class="absolute w-full flex flex-col max-w-[400px] gap-4 left-0 right-0 mx-auto my-auto top-0 bottom-28 max-h-fit">
+        <div class="absolute w-full flex flex-col max-w-[450px] gap-4 left-0 right-0 mx-auto my-auto top-0 bottom-28 max-h-fit bg-stone-200 px-6 py-10 rounded-2xl shadow-lg">
             <h1 class="m-auto mb-[60px] text-[80px]">Log In</h1>
             <input @click="Error = false" type="text" v-model="username" class="bg-stone-100 rounded-full border-2 border-stone-500 focus:border-sky-500 focus:outline-none px-6 py-1 text-xl placeholder:text-stone-700" placeholder="Username">
             <input @click="Error = false" type="password" v-model="password" class="bg-stone-100 rounded-full border-2 border-stone-500 focus:border-sky-500 focus:outline-none px-6 py-1 text-xl placeholder:text-stone-700" placeholder="Password">
@@ -13,7 +13,7 @@
 
 <script setup>
 
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 import axios from '../assets/axios'
 import { useRouter } from 'vue-router'
 
