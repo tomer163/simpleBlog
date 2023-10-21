@@ -48,7 +48,7 @@ onBeforeMount(async()=>{
         try{
             const posts = await axios.get('/postsByCurUser')
             jsonData.value = posts.data
-            console.log(posts)
+            console.log(jsonData.value)
         }
         catch(err){
             console.log(err)
@@ -66,8 +66,9 @@ async function addPost(){
     try {
         form.append('title', postTitle.value)
         form.append('description', postDescription.value)
-        await axios.post('/createPostForCurUser', form, {headers:{ "Content-Type":"multipart/form-data" }})
-        location.reload()
+        const createdpost = await axios.post('/createPostForCurUser', form, {headers:{ "Content-Type":"multipart/form-data" }})
+        console.log(createdpost)
+        jsonData.value.posts.splice(0,0,createdpost.data)
     }
     catch(err){
         console.log(err)
@@ -84,7 +85,6 @@ function addImage(){
     fileInput.value = null
     imageTitle.value =''
     fileCount.value++
-    console.log(imageNames)
 }
 
 function deleteAllImages(){
@@ -92,15 +92,16 @@ function deleteAllImages(){
         form.delete(image)
     })
     fileCount.value=0
-    imageTitle.value =''
+    imageTitle.value = ''
     imageNames=[]
 }
 
 async function deletePost(postId){
     try{
         const deleted = await axios.delete(`/deleteCurUserPost/${postId}`)
-        location.reload()
-        console.log(deleted)
+        let newPosts = jsonData.value.posts
+        newPosts = newPosts.filter(post => post.id !== deleted.data.id)
+        jsonData.value.posts = newPosts
     }
     catch(err){
         console.log(err)

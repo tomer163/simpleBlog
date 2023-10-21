@@ -13,7 +13,7 @@
 
 <script setup>
 
-import { ref } from 'vue'
+import { ref, defineEmits } from 'vue'
 import axios from '../assets/axios'
 import { useRouter } from 'vue-router'
 
@@ -24,6 +24,8 @@ const password = ref('')
 
 const Error = ref(false)
 
+const emit = defineEmits(['loggedIn'])
+
 const logIn = async()=>{
     try{
         const res = await axios.post('/login',{
@@ -31,7 +33,8 @@ const logIn = async()=>{
             password: password.value
         })
         localStorage.setItem('token',res.data.token)
-        router.push('/')
+        emit('loggedIn')
+        await router.push('/')
         console.log(res)
     }
     catch(err){
